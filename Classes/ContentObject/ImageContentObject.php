@@ -64,7 +64,11 @@ class ImageContentObject extends AbstractContentObject
         }
         if (is_file(Environment::getPublicPath() . '/' . $info['3'])) {
             $source = $tsfe->absRefPrefix . str_replace('%2F', '/', rawurlencode($info['3']));
-        } else {
+        }
+        elseif (! filter_var($file, FILTER_VALIDATE_URL) === false) {
+            $source = $file;
+        }
+        else {
             $source = $info[3];
         }
         // Remove file objects for AssetCollector, as it only allows to store scalar values
